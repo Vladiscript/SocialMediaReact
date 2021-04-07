@@ -1,0 +1,10 @@
+.content {
+    grid-area: c;
+    background: rgb(41, 41, 165);
+
+    height: 700px;
+    text-align: center;
+}
+.item {
+    color: greenyellow;
+}

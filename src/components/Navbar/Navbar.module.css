@@ -1,0 +1,9 @@
+.nav {
+    grid-area: n;
+    background: rgb(156, 156, 23);
+    max-height: 300px;
+    height: 300px;
+}
+.item {
+    color: #fff;
+}
