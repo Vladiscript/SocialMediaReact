@@ -1,9 +1,20 @@
 .nav {
     grid-area: n;
-    background: rgb(156, 156, 23);
+    background: rgb(35, 57, 184);
     max-height: 300px;
     height: 300px;
 }
+
 .item {
+    padding-top: 10px;
+    padding-left: 15px;
+}
+
+.item a {
     color: #fff;
+    text-decoration: none;
+}
+
+.item a.active {
+    color: gold;
 }

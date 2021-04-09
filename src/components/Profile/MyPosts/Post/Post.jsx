@@ -1,9 +1,10 @@
 import s from './Post.module.css';
 
-const Post = () => {
+const Post = (props) => {
+
     return (
         <div className={s.item}>
-            New post
+            {props.message}
         </div>
     )
 }
