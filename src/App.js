@@ -7,23 +7,29 @@ import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
 import Profile from './components/Profile/Profile';
 
+function App(props) {
 
-
-function App() {
   return (
     <BrowserRouter>
+
       <div className="container">
         <div className="app-wrapper">
           <Header />
           <Navbar />
           <div className="app-wrapper-content">
-            <Route path="/dialogs" component={Dialogs} />
-            <Route path="/profile" component={Profile} />
+            <Route path="/dialogs"
+              render={() => <Dialogs
+                messagesPage={props.state.messagesPage} dispatch={props.dispatch} />} />
+            <Route path="/profile"
+              render={() => <Profile dispatch={props.dispatch}
+                profilePage={props.state.profilePage} />} />
           </div>
         </div>
       </div>
     </BrowserRouter>
   );
+
 }
+
 
 export default App;
