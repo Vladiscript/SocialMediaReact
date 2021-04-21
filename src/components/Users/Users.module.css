@@ -1,0 +1,50 @@
+.users {
+    margin: 50px auto;
+    /* text-align: center; */
+}
+
+.users__item {
+    /* display: grid;
+    grid-template-areas:
+        "a n c"
+        "b s";
+    grid-template-rows: 6fr 6fr;
+    grid-template-columns: 6fr 6fr; */
+    width: 600px;
+    display: flex;
+    justify-content: space-between;
+    margin: 50px auto;
+    background: #ccc;
+    border-radius: 30px;
+}
+
+.avatar img {
+    grid-area: a;
+    height: 70px;
+    width: 70px;
+    display: inline-block;
+}
+
+.avatar {
+    padding: 10px;
+    text-align: center;
+}
+
+.follow_btn {
+    grid-area: b;
+}
+
+.name {
+    grid-area: n;
+    padding-top: 5px;
+}
+
+.address {
+    padding: 10px;
+    grid-area: c;
+}
+
+.status {
+    grid-area: s;
+    padding-top: 60px;
+}
