@@ -1,4 +1,3 @@
-import React from 'react';
 import { sendMessageActionCreator, inputMessageActionCreator } from '../../redux/messsages-reducer';
 import Dialogs from './Dialogs';
 import { connect } from 'react-redux'

@@ -1,43 +1,58 @@
-import React from 'react';
+import React from 'react'
+import userPhoto from '../../assets/images/images.png'
 import s from './Users.module.css'
-import * as axios from 'axios'
-import userPhoto from '../../assets/images.png'
 
 let Users = (props) => {
 
-    if (props.users.length === 0) {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users').then((response) => {
-            props.setUsers(response.data.items)
-        })
+    let currentPages = Math.ceil(props.totalUsers / props.pageSize)
+    let pages = []
+
+
+    for (let p = 1; p <= currentPages; p++) {
+        pages.push(p)
     }
+    return (
+        <div>
+            <div className={s.pages}>
+                {pages.map(p => {
+                    return <span className={s.pageNumber + ' ' + (props.currentPage === p && s.active)}
+                        onClick={(e) => props.onPageChange(p)} key={p}>{p}</span>
+                })}
+            </div>
+            {
+                props.users.map(user => <div key={user.id}>
 
 
-    return <div>
-        {
-            props.users.map(user => <div key={user.id}>
-
-
-                <div className={s.users}>
-                    <div className={s.users__item}>
-                        <div className={s.avatar}>
-                            <div><img src={user.photos.small ? user.photos.small : userPhoto} alt="" /></div>
-                            <div>
-                                {user.followed ? <button onClick={() => props.unFollowUser(user.id)} className={s.follow_btn}>unFollow</button> : <button onClick={() => props.followUser(user.id)} className={s.follow_btn}>Follow</button>}
+                    <div className={s.users}>
+                        <div className={s.users__item}>
+                            <div className={s.avatar}>
+                                <div><img src={user.photos.small ? user.photos.small : userPhoto} alt="" /></div>
+                                <div>
+                                    {
+                                        user.followed
+                                            ? <button disabled={props.followingProcess.some(id => id === user.id)} onClick={() => {
+                                                props.unFollow(user.id)
+                                            }
+                                            } className={s.follow_btn}>unFollow</button>
+                                            : <button disabled={props.followingProcess.some(id => id === user.id)} onClick={() => {
+                                                props.follow(user.id)
+                                            }} className={s.follow_btn}>Follow</button>}
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <div className={s.name}>{user.name}</div>
-                            <div className={s.status}> {user.status}</div>
-                        </div>
-                        <div>
-                            <div className={s.address}>{'user.address.country'} <br />{props.city}</div>
-                        </div>
+                            <div>
+                                <div className={s.name}>{user.name}</div>
+                                <div className={s.status}> {user.status}</div>
+                            </div>
+                            <div>
+                                <div className={s.address}>{'user.address.country'} <br />{'props.city'}</div>
+                            </div>
 
+                        </div>
                     </div>
-                </div>
-            </div>)
-        }
-    </div>
+                </div>)
+            }
+        </div>
+    )
 }
 
-export default Users;
+export default Users
