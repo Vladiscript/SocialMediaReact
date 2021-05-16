@@ -1,4 +1,4 @@
-import { usersAPI } from "../DAL/api"
+import { profileAPI } from "../DAL/api"
 
 let initialState = {
     posts: [
@@ -8,7 +8,8 @@ let initialState = {
     ],
     newPostText: 'Hello, it is Redux',
     profile: null,
-    isFetching: false
+    isFetching: false,
+    status: ''
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -28,6 +29,8 @@ const profileReducer = (state = initialState, action) => {
             return { ...state, isFetching: action.isFetching }
         case 'SET-PROFILE':
             return { ...state, profile: action.profile }
+        case 'SET-STATUS':
+            return { ...state, status: action.status }
         default: return state
     }
 
@@ -38,16 +41,40 @@ export const addPost = () => ({ type: 'ADD-POST' })
 export const updatePost = (text) => ({ type: 'UPDATE-POST-TEXT', text })
 export const setProfile = (profile) => ({ type: 'SET-PROFILE', profile })
 export const toggleFetching = (isFetching) => ({ type: 'IS-FETCHING', isFetching })
+export const setStatus = (status) => ({ type: 'SET-STATUS', status })
 
 export const getProfileThunk = (userId) => {
     return (dispatch) => {
         dispatch(toggleFetching(true))
-        usersAPI.getProfile(userId)
+        profileAPI.getProfile(userId)
             .then((response) => {
                 dispatch(toggleFetching(false))
                 dispatch(setProfile(response))
             })
     }
 }
+export const updateStatusThunk = (status) => {
+    return (dispatch) => {
+        dispatch(toggleFetching(true))
+        profileAPI.updateStatus(status)
+            .then((response) => {
+                if (response.data.resultCode === 0) {
+                    dispatch(setStatus(status))
+                }
+            })
+    }
+}
+export const getStatusThunk = (id) => {
+    return (dispatch) => {
+        dispatch(toggleFetching(true))
+        profileAPI.getStatus(id)
+            .then((response) => {
+
+                dispatch(setStatus(response.data))
+            }
+            )
+    }
+}
+
 
 export default profileReducer

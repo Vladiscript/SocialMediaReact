@@ -3,6 +3,8 @@ import Users from './Users';
 import { followUser, unFollowUser, setCurrentPage, getUsersThunk, toggleFollowing, followThunk, unFollowThunk } from '../../redux/users-reducer';
 import React from 'react'
 import Preloader from '../common/Preloader/Preloader';
+import { compose } from 'redux';
+import { withAuthRedirect } from '../../HOC/withAuthRedirect';
 
 
 class UsersContainer extends React.Component {
@@ -47,7 +49,11 @@ let mapStateToProps = (state) => {
 }
 
 
-export default connect(mapStateToProps, {
+export default compose(connect(mapStateToProps, {
     followUser, unFollowUser,
     setCurrentPage, toggleFollowing, getUsersThunk, followThunk, unFollowThunk
-})(UsersContainer);
+}),
+    withAuthRedirect
+)(UsersContainer)
+
+
