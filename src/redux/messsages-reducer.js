@@ -7,7 +7,6 @@ let initialState = {
         { id: 4, message: 'How old are you?' },
         { id: 5, message: 'JS is cool!' },
     ],
-    textMessage: '',
     dialogs: [
         { id: 1, name: 'Vlad' },
         { id: 2, name: 'Sveta' },
@@ -23,23 +22,14 @@ const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'SEND-MESSAGE':
             let id = state.messages.length
-            let text = state.textMessage
             return {
                 ...state,
-                textMessage: '',
-                messages: [...state.messages, { id: id + 1, message: text }]
+                messages: [...state.messages, { id: id + 1, message: action.text }]
             }
-        case 'INPUT-MESSAGE':
-            return {
-                ...state,
-                textMessage: action.text
-            }
-
         default: return state
     }
 }
 
-export const sendMessageActionCreator = () => ({ type: 'SEND-MESSAGE' })
-export const inputMessageActionCreator = (text) => ({ type: 'INPUT-MESSAGE', text })
+export const sendMessageActionCreator = (text) => ({ type: 'SEND-MESSAGE', text })
 
 export default messagesReducer

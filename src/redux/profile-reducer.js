@@ -6,7 +6,6 @@ let initialState = {
         { id: 2, postContent: 'Go strave to Front-end with me' },
 
     ],
-    newPostText: 'Hello, it is Redux',
     profile: null,
     isFetching: false,
     status: ''
@@ -18,13 +17,10 @@ const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'ADD-POST':
             let id = state.posts.length
-            let text = state.newPostText
             return {
                 ...state,
-                posts: [...state.posts, { id: id + 1, postContent: text }]
+                posts: [...state.posts, { id: id + 1, postContent: action.text }]
             }
-        case 'UPDATE-POST-TEXT':
-            return { ...state, newPostText: action.text }
         case 'IS-FETCHING':
             return { ...state, isFetching: action.isFetching }
         case 'SET-PROFILE':
@@ -37,8 +33,7 @@ const profileReducer = (state = initialState, action) => {
 
 }
 
-export const addPost = () => ({ type: 'ADD-POST' })
-export const updatePost = (text) => ({ type: 'UPDATE-POST-TEXT', text })
+export const addPost = (text) => ({ type: 'ADD-POST', text })
 export const setProfile = (profile) => ({ type: 'SET-PROFILE', profile })
 export const toggleFetching = (isFetching) => ({ type: 'IS-FETCHING', isFetching })
 export const setStatus = (status) => ({ type: 'SET-STATUS', status })

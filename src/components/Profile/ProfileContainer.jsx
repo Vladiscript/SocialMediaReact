@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addPost, updatePost, setProfile, toggleFetching, getProfileThunk, updateStatusThunk, getStatusThunk } from '../../redux/profile-reducer'
+import { addPost, setProfile, toggleFetching, getProfileThunk, updateStatusThunk, getStatusThunk } from '../../redux/profile-reducer'
 import Profile from './Profile'
 import { withRouter } from 'react-router'
 import { compose } from 'redux'
@@ -13,7 +13,8 @@ class ProfileContainer extends React.Component {
 
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = 16816
+            userId = this.props.autorizedUser
+            if (!userId) { this.props.history.push('/login') }
         }
         this.props.getProfileThunk(userId)
         this.props.getStatusThunk(userId)
@@ -27,11 +28,13 @@ class ProfileContainer extends React.Component {
 let mapStateToProps = (state) => {
     return {
         profile: state.profilePage.profile,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        isAuth: state.auth.isAuth,
+        autorizedUser: state.auth.userId
     }
 }
 
-export default compose(connect(mapStateToProps, { addPost, updatePost, setProfile, toggleFetching, getProfileThunk, updateStatusThunk, getStatusThunk }),
+export default compose(connect(mapStateToProps, { addPost, setProfile, toggleFetching, getProfileThunk, updateStatusThunk, getStatusThunk }),
     withRouter,
     withAuthRedirect
 )(ProfileContainer)

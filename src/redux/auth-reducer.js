@@ -15,7 +15,7 @@ const authReducer = (state = initialState, action) => {
         case 'IS-FETCHING':
             return { ...state, isFetching: action.isFetching }
         case 'SET-USER-DATA':
-            return { ...state, ...action.data, isAuth: true }
+            return { ...state, ...action.data }
         default: return state
     }
 
@@ -24,20 +24,35 @@ const authReducer = (state = initialState, action) => {
 
 export const setProfile = (profile) => ({ type: 'SET-PROFILE', profile })
 export const toggleFetching = (isFetching) => ({ type: 'IS-FETCHING', isFetching })
-export const setUserData = (id, email, login) => ({ type: 'SET-USER-DATA', data: { id, email, login } })
+export const setUserData = (userId, login, email, isAuth) => ({ type: 'SET-USER-DATA', data: { userId, login, email, isAuth } })
 
 export const setAuthThunk = () => {
     return dispatch => {
-        dispatch(toggleFetching(true))
         authAPI.auth()
             .then((response) => {
+                console.log(response);
                 if (response.resultCode === 0) {
-                    let { id, email, login } = response.data
-                    dispatch(toggleFetching(false))
-                    dispatch(setUserData(id, email, login))
+                    let { id, login, email } = response.data
+                    dispatch(setUserData(id, login, email, true))
                 }
             })
     }
+}
+export const loginThunk = (email, password, rememberMe) => (dispatch) => {
+    authAPI.login(email, password, rememberMe)
+        .then((response) => {
+            if (response.resultCode === 0) {
+                dispatch(setAuthThunk())
+            }
+        })
+}
+export const logoutThunk = () => (dispatch) => {
+    authAPI.logout()
+        .then((response) => {
+            if (response.resultCode === 0) {
+                dispatch(setUserData(null, null, null, false))
+            }
+        })
 }
 
 export default authReducer
