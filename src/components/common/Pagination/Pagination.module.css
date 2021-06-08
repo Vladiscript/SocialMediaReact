@@ -1,0 +1,15 @@
+.active {
+    font-weight: bold;
+    color: red;
+}
+
+.pageNumber {
+    padding: 3px;
+}
+
+/* .pages {
+    margin: 0 auto;
+    max-width: 800px;
+    max-height: 50px;
+    overflow: scroll;
+} */

@@ -27,6 +27,8 @@ const profileReducer = (state = initialState, action) => {
             return { ...state, profile: action.profile }
         case 'SET-STATUS':
             return { ...state, status: action.status }
+        case 'SET-PHOTO-SUCCESS':
+            return { ...state, profile: { ...state.profile, photos: action.photos } }
         default: return state
     }
 
@@ -37,6 +39,17 @@ export const addPost = (text) => ({ type: 'ADD-POST', text })
 export const setProfile = (profile) => ({ type: 'SET-PROFILE', profile })
 export const toggleFetching = (isFetching) => ({ type: 'IS-FETCHING', isFetching })
 export const setStatus = (status) => ({ type: 'SET-STATUS', status })
+export const setPhotoSuccess = (photos) => ({ type: 'SET-PHOTO-SUCCESS', photos })
+
+
+export const setPhotoThunk = (photo) => {
+    return async (dispatch) => {
+        const response = await profileAPI.setPhoto(photo)
+        if (response.data.resultCode === 0) {
+            dispatch(setPhotoSuccess(response.data.data.photos))
+        }
+    }
+}
 
 export const getProfileThunk = (userId) => {
     return (dispatch) => {

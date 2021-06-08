@@ -2,18 +2,22 @@
 import { Route, withRouter } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
+
 import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
-import ProfileContainer from './components/Profile/ProfileContainer';
-import UsersContainer from './components/Users/UsersContainer';
 import LoginContainer from './components/LoginPage/LoginContainer';
 import React from 'react';
 import { initializeApp } from './redux/app-reducer';
 import Preloader from './components/common/Preloader/Preloader';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { withAuthRedirect } from './HOC/withAuthRedirect';
+import { Provider } from 'react-redux';
+import { compose } from 'redux';
+import store from './redux/redux-store';
+import { withSuspense } from './HOC/withSuspense';
+
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 
 class App extends React.Component {
 
@@ -24,39 +28,48 @@ class App extends React.Component {
   render() {
 
     if (!this.props.initialized) return <Preloader />
-
     return (
-      <BrowserRouter>
 
-        <div className="container">
-          <div className="app-wrapper">
-            <HeaderContainer />
-            <Navbar />
-            <div className="app-wrapper-content">
-              <Route path="/dialogs"
-                render={() => <DialogsContainer />} />
-              <Route path="/profile/:userId?"
-                render={() => <ProfileContainer />} />
-              <Route path="/users"
-                render={() => <UsersContainer />} />
-              <Route path="/login"
-                render={() => <LoginContainer />} />
-            </div>
+      <div className="container">
+        <div className="app-wrapper">
+          <HeaderContainer />
+          <Navbar />
+          <div className="app-wrapper-content">
+            <Route path="/dialogs"
+              render={withSuspense(DialogsContainer)} />
+            <Route path="/profile/:userId?"
+              render={withSuspense(ProfileContainer)} />
+            <Route path="/users"
+              render={withSuspense(UsersContainer)} />
+            <Route path="/login"
+              render={() => <LoginContainer />} />
           </div>
         </div>
-      </BrowserRouter>)
+      </div>
+    )
   }
 
 }
 
 const mapStateToProps = (state) => {
   return {
-    initialized: state.app.initialized
+    initialized: state.app.initialized,
+    isAuth: state.auth.isAuth
   }
 }
 
-export default compose(connect(mapStateToProps, { initializeApp }),
-  // withRouter,
-  // withAuthRedirect,
-
+const AppContainer = compose(
+  withRouter,
+  connect(mapStateToProps, { initializeApp })
 )(App)
+
+const MaineApp = (props) => {
+  return (
+    <BrowserRouter>
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    </BrowserRouter>)
+
+}
+export default MaineApp

@@ -22,7 +22,6 @@ export const initializedSuccessed = () => ({ type: 'INITIALIZED-SUCCESSED' })
 
 export const initializeApp = () => {
     return dispatch => {
-
         Promise.all([dispatch(setAuthThunk())]).then(() => {
             dispatch(initializedSuccessed())
         })

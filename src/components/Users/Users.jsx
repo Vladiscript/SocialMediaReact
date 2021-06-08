@@ -1,24 +1,14 @@
 import React from 'react'
 import userPhoto from '../../assets/images/images.png'
+import Pagination from '../common/Pagination/Pagination'
 import s from './Users.module.css'
 
 let Users = (props) => {
 
-    let currentPages = Math.ceil(props.totalUsers / props.pageSize)
-    let pages = []
-
-
-    for (let p = 1; p <= currentPages; p++) {
-        pages.push(p)
-    }
     return (
         <div>
-            <div className={s.pages}>
-                {pages.map(p => {
-                    return <span className={s.pageNumber + ' ' + (props.currentPage === p && s.active)}
-                        onClick={(e) => props.onPageChange(p)} key={p}>{p}</span>
-                })}
-            </div>
+            <Pagination totalItems={props.totalUsers} pageSize={props.pageSize} onPageChange={props.onPageChange} currentPage={props.currentPage} />
+
             {
                 props.users.map(user => <div key={user.id}>
 
