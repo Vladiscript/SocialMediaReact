@@ -1,8 +1,9 @@
 import React from 'react'
 import s from './MyPosts.module.css'
 import Post from './Post/Post'
-import { Form, Field } from 'react-final-form'
-import { Textarea } from '../../common/Preloader/FormControl/FormControl'
+import { Formik, Form } from 'formik';
+import { textValidator } from '../../../utilities/validators';
+import { Textarea } from '../../common/Preloader/FormControl/FormControl';
 
 
 
@@ -22,23 +23,31 @@ const MyPosts = (props) => {
     )
 }
 const AddPostForm = (props) => {
-    const onSubmit = (values) => {
-        console.log(values);
-        let text = values.addpost
-        if (text) {
-            props.addPost(text)
+
+    const submit = (values) => {
+
+        if (values.text) {
+            props.addPost(values.text)
         }
     }
     return (
-        <Form
-            onSubmit={onSubmit}
-            render={({ handleSubmit }) => (
-                <form onSubmit={handleSubmit}>
-                    <Field component={Textarea} name='addpost' className={s.textarea} />
-                    <button type="submit">Add post</button>
-                </form>
-            )}
-        />
+        <div>
+            <Formik
+                initialValues={{ text: '' }}
+                validate={textValidator(0, 70)}
+                onSubmit={submit}
+            >{(isValidating) => {
+                return <Form>
+                    <Textarea name={'text'} placeholder={'Enter your text'} />
+                    <button type="submit" disabled={isValidating.errors.text}>
+                        Send post
+                    </button>
+                </Form>
+            }}
+
+            </Formik>
+        </div>
+
     )
 }
 export default MyPosts;

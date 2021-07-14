@@ -8,7 +8,9 @@ let initialState = {
     ],
     profile: null,
     isFetching: false,
-    status: ''
+    error: '',
+    status: '',
+    profileInfo: {},
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -29,6 +31,10 @@ const profileReducer = (state = initialState, action) => {
             return { ...state, status: action.status }
         case 'SET-PHOTO-SUCCESS':
             return { ...state, profile: { ...state.profile, photos: action.photos } }
+        case 'SET-PROFILE-INFO':
+            return { ...state, profileInfo: { ...action.info } }
+        case 'SET-ERROR':
+            return { ...state, error: action.error }
         default: return state
     }
 
@@ -40,7 +46,26 @@ export const setProfile = (profile) => ({ type: 'SET-PROFILE', profile })
 export const toggleFetching = (isFetching) => ({ type: 'IS-FETCHING', isFetching })
 export const setStatus = (status) => ({ type: 'SET-STATUS', status })
 export const setPhotoSuccess = (photos) => ({ type: 'SET-PHOTO-SUCCESS', photos })
+const setProfileData = (info) => ({ type: 'SET-PROFILE-INFO', info })
+const setError = (error) => ({ type: 'SET-ERROR', error })
 
+
+export const saveProfile = (profileData) => {
+    return async (dispatch, getState) => {
+
+        const userId = getState().auth.userId
+        const response = await profileAPI.setProfileInfo(profileData)
+
+        if (response.data.resultCode === 0) {
+            dispatch(setProfileData(profileData))
+            dispatch(getProfileThunk(userId))
+
+        } else {
+            dispatch(setError(response.data.messages[0]))
+            return Promise.reject(response.data.messages[0])
+        }
+    }
+}
 
 export const setPhotoThunk = (photo) => {
     return async (dispatch) => {

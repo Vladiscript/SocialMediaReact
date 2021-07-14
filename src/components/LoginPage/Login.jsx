@@ -1,42 +1,57 @@
 import React from 'react'
-import { Form, Field } from 'react-final-form'
-import { connect } from 'react-redux'
-import { required } from '../../utilities/validators'
-import { Input } from '../common/Preloader/FormControl/FormControl'
-import { loginThunk } from '../../redux/auth-reducer'
+import { loginSchema } from '../../utilities/validators'
 import { Redirect } from 'react-router'
+import { Formik, Form, Field } from 'formik';
+
 
 const LoginForm = (props) => {
 
-    const onSubmit = (FormData) => {
-        props.loginThunk(FormData.email, FormData.password, FormData.rememberMe)
-    }
     if (props.isAuth) { return <Redirect to='/profile' /> }
-    // const maxLength16 = maxLengthCreator(16)
-    // const composeValidators = (...validators) => value =>
-    //     validators.reduce((error, validator) => error || validator(value), undefined)
+
     return (
-        <Form
-            onSubmit={onSubmit}
-            render={({ handleSubmit }) => (
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <Field validate={required} placeholder={'placeholder'} component={Input} name={'email'} />
-                    </div>
-                    <div>
-                        <Field validate={required} component={Input} type={'password'} placeholder={'password'} name={'password'} />
-                    </div>
-                    <div>
-                        <Field component='input' type='checkbox' name={'rememberMe'} />remember me
-                    </div>
-                    <div>
-                        <button type="submit">Log in</button>
-                    </div>
-                </form>
-            )}
-        />)
+        <div>
+            <Formik
+                initialValues={{ email: '', password: '', rememberMe: false, captcha: '' }}
+                validationSchema={loginSchema}
+                onSubmit={(values, { setSubmitting }) => {
+                    setSubmitting(true)
+                    props.loginThunk(values.email, values.password, values.rememberMe, values.captcha, values)
+                    setSubmitting(false)
+                }}
+            >
+                {({ isSubmitting, errors, touched }) => {
+                    return (
+
+                        <Form>
+                            <div>
+                                <Field type='email' name='email' placeholder='Your email' />
+                                {errors.email && touched.email ? <div>{errors.email}</div> : null}
+                            </div>
+                            <div>
+                                <Field type="password" name="password" placeholder='Your password' />
+                                {errors.password && touched.password ? <div>{errors.password}</div> : null}
+                            </div>
+                            <div>
+                                <b>Remember me:</b>
+                                <Field type="checkbox" name="rememberMe" />
+                            </div>
+                            {props.captchaURL && <img src={props.captchaURL} />}
+                            {props.captchaURL && <Field name='captcha' />}
+                            {props.error ? <div>{props.error}</div> : null}
+                            <button type="submit" disabled={isSubmitting}>
+                                Login
+                            </button>
+                        </Form>
+                    )
+                }}
+            </Formik>
+        </div>
+
+
+    )
 }
 
 
 
 export default LoginForm
+

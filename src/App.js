@@ -69,7 +69,8 @@ const MaineApp = (props) => {
       <Provider store={store}>
         <AppContainer />
       </Provider>
-    </BrowserRouter>)
-
+    </BrowserRouter>
+  )
 }
+
 export default MaineApp

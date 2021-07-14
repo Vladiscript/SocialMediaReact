@@ -8,7 +8,9 @@ const Profile = (props) => {
     }
     return (
         <div className="box">
-            <ProfileInfo isOwner={props.isOwner} setPhoto={props.setPhoto} profile={props.profile} status={props.status} updateStatus={props.updateStatus} />
+            <ProfileInfo saveProfile={props.saveProfile} isOwner={props.isOwner} setPhoto={props.setPhoto}
+                profile={props.profile} status={props.status} updateStatus={props.updateStatus}
+                profileInfo={props.profileInfo} error={props.error} />
             <MyPostsContainer dispatch={props.dispatch} profilePage={props.profilePage} />
         </div>
     )
