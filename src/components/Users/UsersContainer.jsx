@@ -4,36 +4,35 @@ import { followUser, unFollowUser, setCurrentPage, getUsersThunk, toggleFollowin
 import React from 'react'
 import Preloader from '../common/Preloader/Preloader';
 import { compose } from 'redux';
+import { useEffect, useMemo } from 'react';
 
 
-class UsersContainer extends React.Component {
+const UsersContainer = (props) => {
 
-    componentDidMount() {
+    useEffect(() => {
+        props.getUsersThunk(props.currentPage, props.pageSize)
+    }, [props.currentPage, props.pageSize])
 
-        this.props.getUsersThunk(this.props.currentPage, this.props.pageSize)
+    const onPageChange = (pageNumber) => {
+
+        props.getUsersThunk(pageNumber, props.pageSize)
+        props.setCurrentPage(pageNumber)
     }
 
-    onPageChange = (pageNumber) => {
 
-        this.props.getUsersThunk(pageNumber, this.props.pageSize)
-        this.props.setCurrentPage(pageNumber)
-    }
+    return <>
+        {props.isFetching === true ? <Preloader /> : null}
+        <Users
+            users={props.users}
+            totalUsers={props.totalUsers}
+            pageSize={props.pageSize}
+            currentPage={props.currentPage}
+            onPageChange={onPageChange}
+            followingProcess={props.followingProcess}
+            follow={props.followThunk}
+            unFollow={props.unFollowThunk} />
+    </>
 
-    render() {
-
-        return <>
-            { this.props.isFetching === true ? <Preloader /> : null}
-            <Users
-                users={this.props.users}
-                totalUsers={this.props.totalUsers}
-                pageSize={this.props.pageSize}
-                currentPage={this.props.currentPage}
-                onPageChange={this.onPageChange}
-                followingProcess={this.props.followingProcess}
-                follow={this.props.followThunk}
-                unFollow={this.props.unFollowThunk} />
-        </>
-    }
 }
 
 

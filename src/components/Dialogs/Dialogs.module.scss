@@ -3,15 +3,26 @@
     justify-content: space-around;
     width: 100%;
     height: 100%;
+    margin-top: 70px;
+    background: white;
+    border-radius: 20px;
 }
 
 .dialogs__items {
     width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .dialog {
+    margin-top: 20px;
     padding: 30px;
     text-align: left;
+    border: 1px solid gray;
+    width: 80%;
+    height: 70px;
 }
 .active {
     color: gold;
@@ -22,7 +33,7 @@
 }
 
 .dialog__name:hover {
-    color: rgb(207, 177, 5);
+    color: rgb(201, 220, 250);
 }
 .messages {
     width: 50%;
@@ -39,6 +50,20 @@
     border: 1px solid #ccc;
     border-radius: 30px;
     max-width: auto;
+    &__form {
+        padding: 20px 0px 20px 20px;
+        display: flex;
+        justify-content: flex-start;
+        button {
+            margin-left: 5px;
+            width: 80px;
+            height: 60px;
+            background-color: lightblue;
+            &:hover {
+                background-color: rgb(118, 202, 230);
+            }
+        }
+    }
 }
 
 .textarea {

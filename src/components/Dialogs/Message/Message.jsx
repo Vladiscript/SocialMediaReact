@@ -1,4 +1,4 @@
-import s from './../Dialogs.module.css'
+import s from './../Dialogs.module.scss'
 
 const Message = (props) => {
     return (

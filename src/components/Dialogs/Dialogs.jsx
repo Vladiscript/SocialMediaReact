@@ -1,16 +1,16 @@
 import React from 'react';
-import s from './Dialogs.module.css'
+import s from './Dialogs.module.scss'
 import DialogItem from './DialogItem/DialogItem'
+import MessageForm from './MessageForm/MessageForm'
 import Message from './Message/Message'
-import { Formik, Form } from 'formik';
-import { Textarea } from '../common/Preloader/FormControl/FormControl';
-import { textValidator } from '../../utilities/validators';
-
+import { sendMessageAC } from '../../redux/messsages-reducer';
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { withAuthRedirect } from '../../HOC/withAuthRedirect'
 
 
 
 const Dialogs = (props) => {
-
 
     let dialogsElements = props.messagesPage.dialogs.map(d => <DialogItem name={d.name} key={d.id} id={d.id} />)
     let messagesElements = props.messagesPage.messages.map(m => <Message message={m.message} key={m.id} />)
@@ -29,31 +29,21 @@ const Dialogs = (props) => {
     )
 }
 
-const MessageForm = (props) => {
-    const submit = (values) => {
-        console.log(values);
-        let text = values.text
-        if (text) {
-            props.sendMessage(text)
+let mapStateToProps = (state) => {
+    return {
+        messagesPage: state.messagesPage
+    }
+}
+let mapDispatchToProps = (dispatch) => {
+    return {
+        sendMessage: (text) => {
+            dispatch(sendMessageAC(text))
         }
     }
-    return (
-        <div>
-            <Formik
-                initialValues={{ text: '' }}
-                validate={textValidator(0, 300)}
-                onSubmit={submit}
-            >{(isValidating) => (
-                <Form>
-                    <Textarea name={'text'} placeholder={'Enter your message'} />
-                    <button type="submit" disabled={isValidating.errors.text}>
-                        Send message
-                    </button>
-                </Form>
-            )}
-
-            </Formik>
-        </div>
-    )
 }
-export default Dialogs;
+
+
+export default compose(connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect
+)(Dialogs)
+

@@ -5,30 +5,29 @@ import Profile from './Profile'
 import { withRouter } from 'react-router'
 import { compose } from 'redux'
 import { withAuthRedirect } from '../../HOC/withAuthRedirect'
+import { useEffect } from 'react'
 
 
-class ProfileContainer extends React.Component {
+const ProfileContainer = (props) => {
 
-    componentDidMount() {
-
-        let userId = this.props.match.params.userId
+    useEffect(() => {
+        let userId = props.match.params.userId
         if (!userId) {
-            userId = this.props.autorizedUser
-            if (!userId) { this.props.history.push('/login') }
+            userId = props.autorizedUser
+            if (!userId) { props.history.push('/login') }
         }
-        this.props.getProfileThunk(userId)
-        this.props.getStatusThunk(userId)
-    }
+        props.getProfileThunk(userId)
+        props.getStatusThunk(userId)
+    }, [props.userId])
 
-    render() {
-        return <Profile {...this.props} profile={this.props.profile}
-            updateStatus={this.props.updateStatusThunk}
-            status={this.props.status} setPhoto={this.props.setPhotoThunk}
-            isOwner={!this.props.match.params.userId}
-            saveProfile={this.props.saveProfile}
-            profileInfo={this.props.profileInfo}
-            error={this.props.error} />
-    }
+    return <Profile {...props} profile={props.profile}
+        updateStatus={props.updateStatusThunk}
+        status={props.status} setPhoto={props.setPhotoThunk}
+        isOwner={!props.match.params.userId}
+        saveProfile={props.saveProfile}
+        profileInfo={props.profileInfo}
+        error={props.error} addPost={props.addPost} posts={props.posts} />
+
 }
 
 let mapStateToProps = (state) => {
@@ -38,6 +37,7 @@ let mapStateToProps = (state) => {
         isAuth: state.auth.isAuth,
         autorizedUser: state.auth.userId,
         profileInfo: state.profilePage.profileInfo,
+        posts: state.profilePage.posts,
         error: state.profilePage.error
     }
 }

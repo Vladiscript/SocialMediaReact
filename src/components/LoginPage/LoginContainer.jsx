@@ -2,12 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { loginThunk } from '../../redux/auth-reducer'
 import LoginForm from './Login'
+import s from './Login.module.scss'
 
 
 class LoginContainer extends React.Component {
     render() {
-        return <div>
-            <h1>Login</h1>
+        return <div className={s.login__container}>
+            <div>vlad9864gr@gmail.com <br />social20</div>
+            <h1 className={s.login__title}>Login</h1>
             <LoginForm {...this.props} />
         </div>
     }

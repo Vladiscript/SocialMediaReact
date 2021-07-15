@@ -1,0 +1,15 @@
+.error__border {
+    border: 2px red solid;
+}
+.error {
+    padding-top: 10px;
+    color: red;
+}
+
+.textarea {
+    border: 3px solid lightblue;
+    border-radius: 5px;
+    resize: none;
+    min-width: 250px;
+    min-height: 60px;
+}

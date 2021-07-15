@@ -1,0 +1,32 @@
+//Variables
+$fontSize: 16;
+$minWidth: 320px;
+$maxWidth: 1440;
+$maxWidthContainer: 1000px;
+$md1: $maxWidthContainer + 12;
+$md2: 991.98;
+$md3: 767.98;
+$md4: 479.98;
+
+@import "null";
+
+.app {
+  &__container {
+    max-width: $maxWidthContainer;
+    padding: 0px 15px;
+    margin: 0 auto;
+  }
+  &__wrapper {
+    width: 100%;
+    min-height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    // align-items: flex-start;
+  }
+  &__content {
+    margin-top: 100px;
+    width: 100%;
+    min-width: $maxWidthContainer;
+  }
+}

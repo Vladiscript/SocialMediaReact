@@ -3,21 +3,18 @@ let initialState = {
     messages: [
         { id: 1, message: 'How are you?' },
         { id: 2, message: 'Yo, man' },
-        { id: 3, message: 'Good luck' },
-        { id: 4, message: 'How old are you?' },
-        { id: 5, message: 'JS is cool!' },
+        { id: 3, message: 'Good luck' }
     ],
     dialogs: [
         { id: 1, name: 'Vlad' },
         { id: 2, name: 'Sveta' },
-        { id: 3, name: 'Leganza' },
-        { id: 4, name: 'Moysha' },
-        { id: 5, name: 'Nikitos' },
+        { id: 3, name: 'Alexey' },
+        { id: 4, name: 'Mikhail' },
+        { id: 5, name: 'Nikita' },
     ]
 }
 
 const messagesReducer = (state = initialState, action) => {
-
 
     switch (action.type) {
         case 'SEND-MESSAGE':
@@ -30,6 +27,6 @@ const messagesReducer = (state = initialState, action) => {
     }
 }
 
-export const sendMessageActionCreator = (text) => ({ type: 'SEND-MESSAGE', text })
+export const sendMessageAC = (text) => ({ type: 'SEND-MESSAGE', text })
 
 export default messagesReducer

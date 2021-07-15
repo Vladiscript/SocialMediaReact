@@ -1,27 +1,28 @@
-import s from './ProfileInfo.module.css'
 import React from 'react'
+import s from '../Profile.module.scss'
 
 
 const ProfileData = ({ profile, goToEditMode, isOwner }) => {
-
-    console.log(profile);
-    return <div>
-        <div>
+    return <div className={s.info__content}>
+        <div className={s.info__item}>
             <b>fullName:</b>{profile.fullName}
         </div>
-        <div>
-            <b>lookingForAJob:</b>{profile.lookingForAJob ? 'yes' : 'no'}
+        <div className={s.info__item} >
+            <b>Looking for a job:</b>{profile.lookingForAJob ? 'yes' : 'no'}
         </div>
-        <div>
-            <b>lookingForAJobDescription:</b>{profile.lookingForAJobDescription}
+        <div className={s.info__item}>
+            <b>My professional skills:</b>{profile.lookingForAJobDescription}
         </div>
-        <div>
+        <div className={s.info__item}>
             <b>About me:</b>{profile.aboutMe}
         </div>
-        <div>
-            <b>Contacts</b>{Object.keys(profile.contacts).map(key => <div key={key}><b>{key}:</b> <div>{profile.contacts[key]}</div> </div>)}
+        <div className={s.info__item}>
+            <b>Contacts:</b>
+            <div className={s.info__contacts}>{Object.keys(profile.contacts).map(key => <div className={s.contacts__item} key={key}><b>{key}:</b> {profile.contacts[key]}</div>)}</div>
         </div>
-        {isOwner && <button onClick={goToEditMode}>Edit</button>}
+        <div className={s.edit__btn}>
+            {isOwner && <button className={s.info__button} onClick={goToEditMode}>Edit</button>}
+        </div>
     </div>
 }
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import s from './Pagination.module.css'
+import s from './Pagination.module.scss'
 
 
 const Pagination = ({ totalItems, pageSize, onPageChange, currentPage, portionSize = 10 }) => {
@@ -20,7 +20,7 @@ const Pagination = ({ totalItems, pageSize, onPageChange, currentPage, portionSi
 
         < div className={s.pages} >
             <button onClick={() => { setPortionNumber(1) }}>1</button>
-            <button onClick={() => { setPortionNumber(portionNumber - 1) }} disabled={portionNumber === 1} >Prev</button>
+            <button className={s.pagination__btns} onClick={() => { setPortionNumber(portionNumber - 1) }} disabled={portionNumber === 1} >Prev</button>
             {
                 pages.filter(p => p >= leftPortionNumber && p <= rightPortionNumber)
                     .map(p => {
@@ -28,7 +28,7 @@ const Pagination = ({ totalItems, pageSize, onPageChange, currentPage, portionSi
                             onClick={(e) => onPageChange(p)} key={p}>{p}</span>
                     })
             }
-            <button onClick={() => { setPortionNumber(portionNumber + 1) }} disabled={portionCount === portionNumber}>Next</button>
+            <button className={s.pagination__btns} onClick={() => { setPortionNumber(portionNumber + 1) }} disabled={portionCount === portionNumber}>Next</button>
             <button onClick={() => { setPortionNumber(portionCount) }}>{portionCount}</button>
         </ div >
     )

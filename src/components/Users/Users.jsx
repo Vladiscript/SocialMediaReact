@@ -1,14 +1,15 @@
 import React from 'react'
 import userPhoto from '../../assets/images/images.png'
 import Pagination from '../common/Pagination/Pagination'
-import s from './Users.module.css'
+import s from './Users.module.scss'
 
 let Users = (props) => {
 
     return (
-        <div>
-            <Pagination totalItems={props.totalUsers} pageSize={props.pageSize} onPageChange={props.onPageChange} currentPage={props.currentPage} />
-
+        <div className={s.users__body}>
+            <div className={s.users__pagination}>
+                <Pagination totalItems={props.totalUsers} pageSize={props.pageSize} onPageChange={props.onPageChange} currentPage={props.currentPage} />
+            </div>
             {
                 props.users.map(user => <div key={user.id}>
 

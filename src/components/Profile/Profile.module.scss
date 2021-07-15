@@ -1,0 +1,155 @@
+.profile {
+    width: 100%;
+    position: relative;
+
+    &__header {
+        background-color: white;
+        border-radius: 20px;
+    }
+    &__background {
+        img {
+            max-width: 1000px;
+            max-height: 70%;
+        }
+    }
+    &__avatar {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        top: 170px;
+        left: 400px;
+        position: absolute;
+        img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid white;
+        }
+    }
+    &__status {
+        font-size: 18px;
+        color: #000;
+        padding: 10px;
+    }
+    &__body {
+        display: flex;
+    }
+    &__info {
+        margin: 20px 10px 0px 00px;
+        background: #fff;
+        padding: 20px;
+        width: 40%;
+        border-radius: 20px;
+    }
+    &__posts {
+        padding: 20px 0px 0px 20px;
+        width: 60%;
+        border-radius: 20px;
+    }
+}
+
+.info {
+    &__title {
+        font-size: 24px;
+        font-weight: 700;
+        padding: 10px;
+        text-align: center;
+    }
+}
+
+.line {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    div {
+        opacity: 0;
+        height: 1px;
+        background-color: rgb(182, 181, 181);
+        width: 95%;
+    }
+}
+
+.avatar {
+    &__body {
+        position: relative;
+    }
+    &__label {
+        cursor: pointer;
+        img {
+            width: 40px;
+            height: 40px;
+        }
+    }
+    &__loader {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+
+        background-color: white;
+        border-radius: 50%;
+    }
+    &__input {
+        position: absolute;
+        opacity: 0;
+        z-index: -1;
+    }
+    &__name {
+        font-size: 24px;
+        font-weight: 700;
+    }
+}
+.info {
+    &__content {
+    }
+    &__body {
+    }
+    &__item {
+        padding: 5px;
+    }
+    &__contacts {
+        padding-left: 20px;
+    }
+    &__button {
+        align-self: center;
+        width: 80px;
+        height: 40px;
+        text-align: center;
+        background-color: lightblue;
+        &:hover {
+            background-color: rgb(118, 202, 230);
+        }
+    }
+}
+.contacts__item {
+    padding: 5px;
+}
+.edit__btn {
+    text-align: center;
+}
+.form__btns {
+    button {
+        width: 80px;
+        height: 40px;
+        text-align: center;
+        background-color: lightblue;
+        margin: 10px;
+        &:hover {
+            background-color: rgb(118, 202, 230);
+        }
+    }
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+.info__contacts_inputs {
+    padding: 10px;
+    border: 1px solid lightblue;
+}
+.info__contats_items {
+    margin-top: 10px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}

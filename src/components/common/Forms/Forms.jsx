@@ -1,5 +1,5 @@
 import React from 'react'
-import s from './FormControl.module.css'
+import s from './Forms.module.scss'
 import { Field, ErrorMessage } from 'formik';
 
 export const Input = ({ input, meta, placeholder }) => {
@@ -26,8 +26,8 @@ export const MyField = (props) => {
 export const Textarea = (props) => {
     return (
         <div>
-            <Field as={'textarea'} name={props.name} placeholder={props.placeholder} />
-            <ErrorMessage name={props.name} component={'div'} />
+            <Field className={s.textarea} as={'textarea'} name={props.name} placeholder={props.placeholder} />
+            <ErrorMessage className={s.error} name={props.name} component={'div'} />
         </div>
     )
 }
